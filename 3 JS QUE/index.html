@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Fibonacci Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #141e30, #243b55);
+      color: #fff;
+    }
+
+    .glass-box {
+      width: 340px;
+      padding: 30px 25px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      animation: zoom 0.6s ease;
+    }
+
+    @keyframes zoom {
+      from {
+        transform: scale(0.6);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #ff512f, #f09819);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .output {
+      margin-top: 18px;
+      font-size: 16px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      min-height: 40px;
+      animation: fade 0.4s ease;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="glass-box">
+    <h2> Fibonacci Generator</h2>
+
+    <input type="number" id="terms" placeholder="Enter terms " oninput="limit(this)">
+    <button onclick="showSeries()">Generate Series</button>
+
+    <div class="output" id="display"></div>
+    <div class="note">Press Enter to Generate </div>
+  </div>
+
+  <script>
+    const inputBox = document.getElementById("terms");
+
+    function limit(el) {
+      if (el.value > 40) el.value = 40;
+      if (el.value.length > 2) el.value = el.value.slice(0, 2);
+    }
+
+    function showSeries() {
+      const total = Number(inputBox.value);
+      const output = document.getElementById("display");
+
+      if (!total || total < 1) {
+        output.textContent = " Please enter a valid positive number.";
+        return;
+      }
+
+      let fib = [];
+      let a = 0, b = 1;
+
+      for (let i = 0; i < total; i++) {
+        fib.push(a);
+        [a, b] = [b, a + b];   
+      }
+
+      output.textContent = ` Series (${total} terms): ` + fib.join(" • ");
+    }
+
+    inputBox.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        showSeries();
+      }
+    });
+  </script>
+
+</body>
+</html>
