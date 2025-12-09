@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Factorial Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #1d2671, #c33764);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 35px 25px;
+      border-radius: 20px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      text-align: center;
+      font-size: 17px;
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      background: linear-gradient(135deg, #ff512f, #dd2476);
+      border: none;
+      color: white;
+      padding: 12px;
+      font-size: 17px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .result {
+      margin-top: 18px;
+      font-size: 18px;
+      min-height: 24px;
+      animation: fade 0.4s ease;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer {
+      margin-top: 10px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h2> Smart Factorial</h2>
+    <input type="number" id="num" placeholder="Enter a number " oninput="restrict(this, 2)">
+    <button onclick="calculate()">Find Factorial</button>
+    <div class="result" id="output"></div>
+    <div class="footer">Press Enter to calculate </div>
+  </div>
+
+  <script>
+    const input = document.getElementById("num");
+
+    function restrict(el, len) {
+      if (el.value.length > len) {
+        el.value = el.value.slice(0, len);
+      }
+    }
+
+    function calculate() {
+      let n = Number(input.value);
+      let result = 1;
+
+      if (input.value === "" || n < 0) {
+        show(" Please enter a valid positive number");
+        return;
+      }
+
+      for (let i = 1; i <= n; i++) {
+        result *= i;
+      }
+
+      show(` ${n}! = ${result}`);
+    }
+
+    function show(msg) {
+      const out = document.getElementById("output");
+      out.textContent = msg;
+      out.style.opacity = "0";
+      setTimeout(() => {
+        out.style.opacity = "1";
+      }, 100);
+    }
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        calculate();
+      }
+    });
+  </script>
+
+</body>
+
+</html>
