@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Checker Tool</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #8d8282;
+            font-family: "Poppins", sans-serif;
+            color: #fffdfd;
+        }
+
+        .box {
+            width: 340px;
+            padding: 28px;
+            background: #1f1f1f;
+            border-radius: 14px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .box h2 {
+            margin-bottom: 15px;
+            color: #62d9ff;
+        }
+
+        .inputField {
+            width: 100%;
+            padding: 11px;
+            border-radius: 8px;
+            border: 1px solid #333232;
+            background: #2a2a2a;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .inputField:focus {
+            border-color: #62d9ff;
+        }
+
+        .btn {
+            margin-top: 15px;
+            width: 100%;
+            padding: 12px;
+            background: #62d9ff;
+            border: none;
+            color: #070707;
+            font-size: 17px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: #35c8ff;
+        }
+
+        #output {
+            margin-top: 18px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+        <h2>Prime Checker</h2>
+
+        <input type="number" id="value" class="inputField"  placeholder="Type a Number" oninput="limitLength(this, 100)">
+
+        <button class="btn" onclick="verifyPrime()">Check Prime</button>
+
+        <p id="output"></p>
+    </div>
+
+    <script>
+        function verifyPrime() {
+
+            let number = Number(document.getElementById("value").value);
+            let message = document.getElementById("output");
+
+            if (!number) {
+                message.style.color = "yellow";
+                message.textContent = "Enter a valid number!";
+                return;
+            }
+
+            if (number < 2) {
+                message.style.color = "#ff6b6b";
+                message.textContent = number + " is NOT Prime";
+                return;
+            }
+
+            let prime = true;
+
+            for (let x = 2; x <= Math.sqrt(number); x++) {
+                if (number % x === 0) {
+                    prime = false;
+                    break;
+                }
+            }
+
+            if (prime) {
+                message.style.color = "#6bff95";
+                message.textContent = number + " is PRIME ✔";
+            } else {
+                message.style.color = "#ff6b6b";
+                message.textContent = number + " is NOT Prime ✘";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
