@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Letter Analyzer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+    }
+
+    .app {
+      width: 360px;
+      padding: 30px 25px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.12);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px);
+      text-align: center;
+      animation: zoom 0.5s ease;
+    }
+
+    @keyframes zoom {
+      from { transform: scale(0.8); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, #ff512f, #dd2476);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+    }
+
+    .output-box {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      animation: fade 0.4s ease;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      padding: 8px 14px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #00c6ff, #0072ff);
+      font-size: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .empty-msg {
+      width: 100%;
+      text-align: center;
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+    <h2>✨ Letter Analyzer</h2>
+
+    <input type="text" id="textInput" placeholder="Type up to 8 letters" maxlength="8">
+    <button onclick="countLetters()">Analyze</button>
+
+    <div class="output-box" id="resultBox"></div>
+  </div>
+
+  <script>
+    function countLetters() {
+      const str = document.getElementById("textInput").value.toLowerCase();
+      const frequency = {};
+
+      for (let char of str) {
+        if (char >= 'a' && char <= 'z') {
+          if (frequency[char]) {
+            frequency[char]++;
+          } else {
+            frequency[char] = 1;
+          }
+        }
+      }
+
+      const resultBox = document.getElementById("resultBox");
+      resultBox.innerHTML = "";
+
+      const entries = Object.entries(frequency);
+
+      if (entries.length === 0) {
+        resultBox.innerHTML = `<div class="empty-msg">⚠️ No letters found</div>`;
+        return;
+      }
+
+      for (let [letter, count] of entries) {
+        const div = document.createElement("div");
+        div.className = "badge";
+        div.textContent = `${letter.toUpperCase()} : ${count}`;
+        resultBox.appendChild(div);
+      }
+    }
+  </script>
+
+</body>
+</html>
